@@ -37,14 +37,15 @@ bantu aku mengerjakan step per step
 
 9. bantu aku ngecek Pastikan di database migration tabel inbound_shipments lu udah ada kolom legacy_receipt_number (tipe string/varchar, boleh nullable). Kalau belum ada, lu tambahin dulu di filemigration-nya terus jalanin php artisan migrate:fresh di dalam Docker.
 -----------------------------------------------------------------------------------------
-**Tugas Besar & Tugas 3 Integration**
+Setup awal untuk integrasi Tugas Besar 
 
-1. Membuka dan menganalisis petunjuk Tugas Besar & Tugas 3 untuk memetakan kriteria rubrik penilaian.
-2. Menginstal library `firebase/php-jwt` untuk verifikasi JWT token dengan JWKS secara asinkron.
-3. Membuat database migration untuk membuat tabel `roles` dan menambahkan foreign key `role_id` di tabel `users` untuk pemetaan peran pengguna lokal.
-4. Membuat model `Role.php` dan merelasikannya dengan model `User.php`.
-5. Membuat middleware `VerifyJwtSso.php` untuk memvalidasi JWT Bearer token dari SSO Dosen, memetakan detail user/role ke tabel lokal, serta mengautentikasi request.
-6. Memperbaiki pre-existing syntax error nested middleware array di `config/lighthouse.php` yang memicu TypeException pada router Laravel.
-7. Memasang middleware `VerifyJwtSso` pada rute REST API (`routes/api.php`) dan GraphQL API (`config/lighthouse.php`).
-8. Membuat variabel dinamis `IAE_TEAM_ID` dan `IAE_SSO_URL` di `.env` dan memperbarui `IaeCentralService.php`.
-9. Memindahkan berkas analisis ke root directory dengan penamaan resmi `analisis_tugas_3.md` dan menyisipkan visualisasi diagram sequence.
+1. kamu buka folder Instruksi Tugas dan buka file tugas Besar Tugas 3, dan kamu fokus ke Tugas Besar tersebut, apa maksud dari tubes tersebut dan kamu pahamin rubrik penilaiannya
+2. kamu baca instruksi tugas 2 dan baca file proses bisnis, kamu pahamin alurnya
+3. untuk mengerjakan tugas besar [Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%203%20%26%20Tubes/Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf) 
+apakah ada yang perlu di sesuaikan lagi dikodingan saya? tulis dulu disini
+4. berarti apa ajayang kurang untuk service saya sesuai ketentuan tubes? [Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%203%20%26%20Tubes/Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf) 
+5. oke sesuikan punya saya agar sesuai denga ketentuan tubes dan bisa integeraSI DENGAN SERVICE lainnya (service saya adalah service C)
+[Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%203%20%26%20Tubes/Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf) 
+[Proses%20Bisnis.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%202/Proses%20Bisnis.pdf) 
+6. apakah wajib menggunakan verifyjwtsso? temen saya nggak pake soalnya
+

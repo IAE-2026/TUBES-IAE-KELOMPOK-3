@@ -48,4 +48,7 @@ apakah ada yang perlu di sesuaikan lagi dikodingan saya? tulis dulu disini
 [Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%203%20%26%20Tubes/Tugas%20Besar%20%20Tugas%203%20-%20The%20Enterprise%20Digital%20City-2.pdf) 
 [Proses%20Bisnis.pdf](file;file:///Users/rizwansaputra/Documents/IAE/Tugas%202%20Biasa/102022430048_Rizwan-Saputra-Pengiriman-Service/Instruksi%20Tugas%202/Proses%20Bisnis.pdf) 
 6. apakah wajib menggunakan verifyjwtsso? temen saya nggak pake soalnya
-
+7. Perbaiki middleware VerifyJwtSso
+Ubah SOAP Client agar bisa menimpan legacy_receipt_number.
+8. Tambahkan AMQP Publisher untuk event shipment.created.
+9. Tolong bantu saya perbaiki parser JWT

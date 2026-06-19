@@ -1,29 +1,93 @@
+version: '3.8'
+
 services:
-  app:
+  # API Gateway
+  gateway:
     build:
-      context: .
+      context: ./gateway
       dockerfile: Dockerfile
-    image: expedition-service-app
-    container_name: expedition-app
-    restart: unless-stopped
+    container_name: api-gateway
+    ports:
+      - "8000:80"
+    depends_on:
+      - service-a-app
+      - service-b-app
+      - service-c-nginx
+    networks:
+      - tubes-network
+
+  # Service A: Inventory Service
+  service-a-app:
+    build:
+      context: ./service-a
+      dockerfile: Dockerfile
+    container_name: service-a-app
+    volumes:
+      - ./service-a:/var/www/html
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=service-a-db
+      - DB_PORT=3306
+      - DB_DATABASE=db_inventory
+      - DB_USERNAME=root
+      - DB_PASSWORD=secret
+    depends_on:
+      - service-a-db
+    networks:
+      - tubes-network
+
+  service-a-db:
+    image: mysql:8.0
+    container_name: service-a-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: db_inventory
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+    networks:
+      - tubes-network
+
+  # Service B: Procurement Service
+  service-b-app:
+    build:
+      context: ./service-b
+      dockerfile: Dockerfile
+    container_name: service-b-app
+    volumes:
+      - ./service-b:/var/www/html
+    environment:
+      - DB_CONNECTION=sqlite
+      - APP_ENV=local
+      - APP_DEBUG=true
+    networks:
+      - tubes-network
+
+  # Service C: Expedition/Logistics Service
+  service-c-app:
+    build:
+      context: ./service-c
+      dockerfile: Dockerfile
+    container_name: service-c-app
     working_dir: /var/www
     volumes:
-      - .:/var/www
+      - ./service-c:/var/www
     networks:
-      - expedition-network
+      tubes-network:
+        aliases:
+          - app
 
-  nginx:
+
+  service-c-nginx:
     image: nginx:alpine
-    container_name: expedition-nginx
-    restart: unless-stopped
-    ports:
-      - "8002:80"
+    container_name: service-c-nginx
     volumes:
-      - .:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./service-c:/var/www
+      - ./service-c/docker-compose/nginx:/etc/nginx/conf.d/
+    depends_on:
+      - service-c-app
     networks:
-      - expedition-network
+      - tubes-network
 
 networks:
-  expedition-network:
+  tubes-network:
     driver: bridge

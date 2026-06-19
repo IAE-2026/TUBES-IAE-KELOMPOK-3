@@ -1,0 +1,47 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+type Query {
+    "Mengambil daftar seluruh riwayat Purchase Order"
+    procurements: [Procurement!]! @all
+
+    "Mengambil detail satu Purchase Order berdasarkan ID"
+    procurement(id: ID! @eq): Procurement @find
+}
+
+type Procurement {
+    id: ID!
+    po_number: String!
+    supplier_name: String!
+    supplier_contact: String
+    order_date: Date!
+    expected_delivery_date: Date
+    status: String!
+    total_amount: Float!
+    currency: String!
+    notes: String
+    created_by: String
+    created_at: DateTime!
+    updated_at: DateTime!
+    
+    "Daftar komponen yang dipesan dalam Purchase Order ini"
+    items: [ProcurementItem!]! @hasMany
+}
+
+type ProcurementItem {
+    id: ID!
+    procurement_id: ID!
+    component_name: String!
+    part_number: String!
+    quantity: Int!
+    unit: String!
+    unit_price: Float!
+    subtotal: Float!
+    created_at: DateTime!
+    updated_at: DateTime!
+    
+    procurement: Procurement! @belongsTo
+}

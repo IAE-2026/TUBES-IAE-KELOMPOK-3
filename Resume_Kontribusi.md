@@ -25,7 +25,7 @@
 *Melakukan perancangan dan implementasi Service B lewat branch  `fatir-service-b`.*
 
 1. **Basis Data Lokal**: Merancang skema penyimpanan database SQLite beserta pembuatan tabel `procurements` dan `procurement_items`.
-2. **Fitur Utama API**: Membangun antarmuka API CRUD yang lengkap dan fleksibel untuk mengelola siklus data Purchase Order (PO).
+2. **Fitur Utama API**: Membangun antarmuka API CRUD yang lengkap dan fleksibel untuk mengelola data Purchase Order (PO).
 3. **Keamanan Endpoint**: Menerapkan validasi keamanan Machine-to-Machine (M2M) dengan server SSO menggunakan metode API Key.
 4. **Integrasi SOAP Audit**: Mengembangkan SOAP Client untuk memvalidasi kecocokan Purchase Order dan mengamankan penyimpanan `soap_receipt_number` untuk tanda bukti transaksi.
 5. **Event-Driven Messaging**: Memprogram fungsionalitas AMQP Publisher untuk menerbitkan event `procurement.created` ke RabbitMQ ketika dokumen PO berhasil dibuat.

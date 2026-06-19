@@ -13,8 +13,8 @@
 1. **Pengembangan Database & Model**: Membuat skema database MySQL lokal, merancang migrasi untuk tabel `components`, serta membuat struktur model dan controller inventori.
 2. **Autentikasi Keamanan**: Mengintegrasikan sistem verifikasi Single Sign-On (SSO) berbasis JSON Web Token (JWT) pada endpoint Service A.
 3. **Integrasi SOAP Audit**: Membuat SOAP XML Client untuk mengirimkan data aktivitas *Receive Stock* ke sistem audit eksternal serta memproses penyimpanan data `ReceiptNumber`.
-4. **Event-Driven Messaging**: Membuat AMQP Publisher untuk menyebarkan pesan/event `component.received` ke broker RabbitMQ saat stok baru terdata.
-5. **Integrasi Lingkungan Sistem**:
+4. **Pengiriman Pesan Berbasis Peristiwa**: Membuat AMQP Publisher untuk menyebarkan pesan/event `component.received` ke broker RabbitMQ saat stok baru terdata.
+5. **Integrasi Sistem**:
   - Mengelola penggabungan (merge) branch fungsional (`rizky-service-a`, `fatir-service-b`, dan `rizwan-service-c`) ke dalam repositori utama kelompok.
   - Menyusun file konfigurasi `docker-compose.yml` untuk memanifestasikan seluruh service ke dalam container.
   - Mengonfigurasi Nginx API Gateway untuk single entry point.
@@ -25,10 +25,10 @@
 *Melakukan perancangan dan implementasi Service B lewat branch  `fatir-service-b`.*
 
 1. **Basis Data Lokal**: Membuat skema penyimpanan database SQLite beserta pembuatan tabel `procurements` dan `procurement_items`.
-2. **Fitur Utama API**: Membuat antarmuka API CRUD yang lengkap dan fleksibel untuk mengelola data Purchase Order (PO).
+2. **Fitur API**: Membuat antarmuka API CRUD yang lengkap dan fleksibel untuk mengelola data Purchase Order (PO).
 3. **Keamanan Endpoint**: Menerapkan validasi keamanan Machine-to-Machine (M2M) dengan server SSO menggunakan metode API Key.
 4. **Integrasi SOAP Audit**: Membuat SOAP Client untuk memvalidasi kecocokan Purchase Order dan mengamankan penyimpanan `soap_receipt_number` untuk tanda bukti transaksi.
-5. **Event-Driven Messaging**: Membuat AMQP Publisher untuk menerbitkan event `procurement.created` ke RabbitMQ ketika dokumen PO berhasil dibuat.
+5. **Pengiriman Pesan Berbasis Peristiwa**: Membuat AMQP Publisher untuk menerbitkan event `procurement.created` ke RabbitMQ ketika dokumen PO berhasil dibuat.
 6. **Integrasi Lintas Service**:
   - Membuat endpoint API integrasi untuk menangani pembaruan status Purchase Order dari sistem gudang eksternal.
   - Melakukan debugging dan finalisasi Service B sebelum kode digabungkan ke branch utama.
@@ -41,8 +41,8 @@
 1. **Layanan Logistik**: Membuat REST API fungsional untuk mendokumentasikan data manifest pengiriman logistik masuk (`inbound-shipments`).
 2. **Autentikasi Keamanan**: Membuat middleware `VerifyJwtSso` untuk memvalidasi kecocokan token JWT secara dinamis menggunakan JWKS dari server SSO.
 3. **Integrasi SOAP Audit**: Membuat SOAP Client untuk melakukan pendaftaran manifest ke sistem audit eksternal sekaligus menyimpan `legacy_receipt_number` untuk bukti integrasi.
-4. **Event-Driven Messaging**: Membuat modul AMQP Publisher untuk mengirimkan informasi `shipment.created` via RabbitMQ saat ekspedisi siap diproses.
-5. **Finalisasi & Refactoring**:
+4. **Pengiriman Pesan Berbasis Peristiwa**: Membuat modul AMQP Publisher untuk mengirimkan informasi `shipment.created` via RabbitMQ saat ekspedisi siap diproses.
+5. **Finalisasi & Pengecekan Ulang**:
   - Menyelesaikan proses integrasi internal Service C secara mandiri sebelum digabungkan ke repositori utama kelompok.
   - Meningkatkan fungsi parser token JWT dan melakukan update pada pencatatan log aktivitas integrasi service.
   - Melakukan penyesuaian fungsionalitas request M2M ke SSO sesuai instruksi terbaru dari dosen pengampu.

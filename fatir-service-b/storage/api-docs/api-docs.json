@@ -1,0 +1,506 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Service B - Procurement API (Pengadaan Bahan Baku)",
+        "description": "API untuk mengelola Purchase Order (PO) pengadaan bahan baku komponen elektronik pada pabrik. Merupakan bagian dari ekosistem Inbound Supply Chain.",
+        "contact": {
+            "name": "Tim Procurement",
+            "email": "procurement@factory.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "Procurement Service API v1"
+        }
+    ],
+    "paths": {
+        "/procurements": {
+            "get": {
+                "tags": [
+                    "Procurements"
+                ],
+                "summary": "Mengambil daftar seluruh riwayat Purchase Order",
+                "description": "Endpoint Collection: Menampilkan daftar seluruh Purchase Order (PO) yang pernah diajukan oleh pabrik ke berbagai supplier.",
+                "operationId": "getAllProcurements",
+                "responses": {
+                    "200": {
+                        "description": "Data retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Procurement"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "service_name": {
+                                                    "type": "string",
+                                                    "example": "Procurement-Service"
+                                                },
+                                                "api_version": {
+                                                    "type": "string",
+                                                    "example": "v1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - API Key tidak valid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized. API Key (X-IAE-KEY) tidak valid atau tidak ditemukan."
+                                        },
+                                        "errors": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "X-IAE-KEY": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Procurements"
+                ],
+                "summary": "Membuat dokumen Purchase Order (PO) baru",
+                "description": "Endpoint Action: Membuat Purchase Order baru yang akan dikirimkan ke pihak supplier komponen elektronik. Termasuk daftar item/komponen yang dipesan.",
+                "operationId": "createProcurement",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "supplier_name",
+                                    "order_date",
+                                    "items"
+                                ],
+                                "properties": {
+                                    "supplier_name": {
+                                        "type": "string",
+                                        "example": "PT. Chip Elektronik Indonesia"
+                                    },
+                                    "supplier_contact": {
+                                        "type": "string",
+                                        "example": "sales@chipelektronik.co.id"
+                                    },
+                                    "order_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-05-15"
+                                    },
+                                    "expected_delivery_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-05-25"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "submitted",
+                                        "enum": [
+                                            "draft",
+                                            "submitted",
+                                            "approved",
+                                            "in_progress",
+                                            "shipped",
+                                            "delivered",
+                                            "cancelled"
+                                        ]
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "IDR"
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Urgent untuk lini produksi batch #45"
+                                    },
+                                    "created_by": {
+                                        "type": "string",
+                                        "example": "Admin Procurement"
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "component_name",
+                                                "part_number",
+                                                "quantity",
+                                                "unit_price"
+                                            ],
+                                            "properties": {
+                                                "component_name": {
+                                                    "type": "string",
+                                                    "example": "IC Mikrokontroler ATmega328P"
+                                                },
+                                                "part_number": {
+                                                    "type": "string",
+                                                    "example": "ATMEGA328P-PU"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 500
+                                                },
+                                                "unit": {
+                                                    "type": "string",
+                                                    "example": "pcs"
+                                                },
+                                                "unit_price": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 25000
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Purchase Order berhasil dibuat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Purchase Order created successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Procurement"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "service_name": {
+                                                    "type": "string",
+                                                    "example": "Procurement-Service"
+                                                },
+                                                "api_version": {
+                                                    "type": "string",
+                                                    "example": "v1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "X-IAE-KEY": []
+                    }
+                ]
+            }
+        },
+        "/procurements/{id}": {
+            "get": {
+                "tags": [
+                    "Procurements"
+                ],
+                "summary": "Mengambil detail kelengkapan dari satu Purchase Order",
+                "description": "Endpoint Resource: Menampilkan rincian satu pesanan Purchase Order untuk mengetahui kelengkapannya (daftar part number komponen yang dipesan dan total harga).",
+                "operationId": "getProcurementById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Purchase Order",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data retrieved successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Procurement"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "service_name": {
+                                                    "type": "string",
+                                                    "example": "Procurement-Service"
+                                                },
+                                                "api_version": {
+                                                    "type": "string",
+                                                    "example": "v1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Purchase Order tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Purchase Order not found"
+                                        },
+                                        "errors": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "X-IAE-KEY": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Procurement": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "po_number": {
+                        "type": "string",
+                        "example": "PO-20260515-001"
+                    },
+                    "supplier_name": {
+                        "type": "string",
+                        "example": "PT. Chip Elektronik Indonesia"
+                    },
+                    "supplier_contact": {
+                        "type": "string",
+                        "example": "sales@chipelektronik.co.id"
+                    },
+                    "order_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-05-15"
+                    },
+                    "expected_delivery_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-05-25"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "submitted",
+                        "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "in_progress",
+                            "shipped",
+                            "delivered",
+                            "cancelled"
+                        ]
+                    },
+                    "total_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 15000000
+                    },
+                    "currency": {
+                        "type": "string",
+                        "example": "IDR"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Urgent untuk lini produksi batch #45"
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "example": "Admin Procurement"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProcurementItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ProcurementItem": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "procurement_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "component_name": {
+                        "type": "string",
+                        "example": "IC Mikrokontroler ATmega328P"
+                    },
+                    "part_number": {
+                        "type": "string",
+                        "example": "ATMEGA328P-PU"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "unit": {
+                        "type": "string",
+                        "example": "pcs"
+                    },
+                    "unit_price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 25000
+                    },
+                    "subtotal": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 12500000
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "X-IAE-KEY": {
+                "type": "apiKey",
+                "description": "API Key untuk autentikasi. Gunakan NIM Mahasiswa sebagai value.",
+                "name": "X-IAE-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Procurements",
+            "description": "Procurements"
+        }
+    ]
+}

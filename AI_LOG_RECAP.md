@@ -52,3 +52,12 @@ apakah ada yang perlu di sesuaikan lagi dikodingan saya? tulis dulu disini
 Ubah SOAP Client agar bisa menimpan legacy_receipt_number.
 8. Tambahkan AMQP Publisher untuk event shipment.created.
 9. Tolong bantu saya perbaiki parser JWT
+10. Dear all, untuk menyesuaikan beberapa hal, saya menambahkan kewajiban penambahan “nim” pada request body untuk request ke SSO M2M ya. 
+
+curl -s -X POST http://localhost:8080/api/v1/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{"api_key":"KEY-MHS-45","nim":"102022400033"}'
+
+tolong disesuaikan agar bisa hit dan mendapatkan token baik yang sebelumnya sudah berhasil atau belum
+
+tolong sesuaikan lagi sesuai dengan yang diminta pak ekky, ubah pada bagian iaecentralservice.php dan .env

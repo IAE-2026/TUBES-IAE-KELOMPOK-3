@@ -21,7 +21,8 @@ class IaeCentralService
     public function getM2mToken()
     {
         $response = Http::post($this->baseUrl . '/api/v1/auth/token', [
-            'api_key' => $this->apiKey
+            'api_key' => $this->apiKey,
+            'nim' => env('IAE_NIM', '102022430048')
         ]);
 
         if ($response->successful()) {

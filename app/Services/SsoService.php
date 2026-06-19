@@ -29,6 +29,7 @@ class SsoService
         return Cache::remember('sso_m2m_token', 3000, function () {
             $response = Http::post($this->baseUrl . '/api/v1/auth/token', [
                 'api_key' => $this->apiKey,
+                'nim' => env('API_KEY', '102022430058')
             ]);
 
             if ($response->failed()) {

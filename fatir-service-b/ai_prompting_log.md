@@ -2,8 +2,11 @@
 ## Tugas 2, Tugas 3, Tugas Besar IAE
 
 **Nama** : Raden Fatir Paundrayudha Airlangga Affandhi
+
 **NIM** : 102022430058
+
 **Service** : Service B - Procurement (Pengadaan Bahan Baku)
+
 **AI Engine** : Claude dan Google Gemini
 
 #### Daftar Prompt User:

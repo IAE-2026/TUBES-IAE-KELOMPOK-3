@@ -30,7 +30,7 @@ Membuat setiap ada pengiriman baru yang dibuat, service akan publish event shipm
 
 5. Rincian Pengerjaan Tugas Besar (Tubes)
 Pada Tugas Besar, saya menyesuaikan semuanya agar sesuai kontrak, proses bisnis, dan siap dihubungkan dengan service milik teman kelompok saya.
-- Menyesuaikan alur Service C agar sesuai dengan sistem "The Enterprise Digital City".
+- Menyesuaikan alur Service C.
 - Memperbaiki parser JWT dan memastikan middleware VerifyJwtSso dapat memvalidasi token yang masuk dari service lain dengan benar.
 - Memastikan SOAP Client dan RabbitMQ bisa jalan tanpa masalah. Melakukan beberapa commit  untuk memastikan kode sudah bi dipakai secara penuh dalam skenario Tugas Besar lintas kelompok. 
 

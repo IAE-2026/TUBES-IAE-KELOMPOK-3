@@ -1,5 +1,5 @@
 # Rekap Log Prompting AI
-## Tugas 2 - Build Your Service - Arsitektur Sistem Enterprise (IAE)
+## Tugas 2, Tugas 3, Tugas Besar IAE
 
 **Nama** : Raden Fatir Paundrayudha Airlangga Affandhi
 **NIM** : 102022430058
